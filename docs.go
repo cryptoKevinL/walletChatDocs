@@ -37,7 +37,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "Wallet Address",
                         "name": "address",
-                        "in": "query",
+                        "in": "path",
                         "required": true
                     }
                 ],

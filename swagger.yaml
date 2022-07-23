@@ -72,7 +72,7 @@ paths:
         in Inbox
       parameters:
       - description: Wallet Address
-        in: query
+        in: path
         name: address
         required: true
         type: string
