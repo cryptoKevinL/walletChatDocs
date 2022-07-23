@@ -1,4 +1,4 @@
-basePath: /
+basePath: /get_inbox
 definitions:
   entity.Chatiteminbox:
     properties:

@@ -10,7 +10,7 @@
         "version": "1.0"
     },
     "host": "localhost:8080",
-    "basePath": "/",
+    "basePath": "/get_inbox",
     "paths": {
         "/get_inbox/{address}": {
             "get": {
