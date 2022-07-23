@@ -1,3 +1,4 @@
+basePath: /
 definitions:
   entity.Chatiteminbox:
     properties:
@@ -32,8 +33,14 @@ definitions:
       unread:
         type: integer
     type: object
+host: localhost:8080
 info:
-  contact: {}
+  contact:
+    email: walletchatextension@gmail.com
+    url: https://walletchat.fun
+  description: This is the WalletChat messagez
+  title: WalletChat API
+  version: "1.0"
 paths:
   /get_inbox/{address}:
     get:

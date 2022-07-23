@@ -1,8 +1,16 @@
 {
     "swagger": "2.0",
     "info": {
-        "contact": {}
+        "description": "This is the WalletChat messagez",
+        "title": "WalletChat API",
+        "contact": {
+            "url": "https://walletchat.fun",
+            "email": "walletchatextension@gmail.com"
+        },
+        "version": "1.0"
     },
+    "host": "localhost:8080",
+    "basePath": "/",
     "paths": {
         "/get_inbox/{address}": {
             "get": {
