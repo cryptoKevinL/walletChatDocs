@@ -32,6 +32,15 @@ const docTemplate = `{
                     "inbox"
                 ],
                 "summary": "Get Inbox Summary With Last Message",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Wallet Address",
+                        "name": "address",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",

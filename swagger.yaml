@@ -70,6 +70,12 @@ paths:
       - application/json
       description: Get Each 1-on-1 Conversation, NFT and Community Chat For Display
         in Inbox
+      parameters:
+      - description: Wallet Address
+        in: query
+        name: address
+        required: true
+        type: string
       produces:
       - application/json
       responses:
