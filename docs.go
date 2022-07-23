@@ -44,9 +44,70 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/getall_chatitems": {
+            "get": {
+                "description": "Get Entire Chatitems table",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "inbox"
+                ],
+                "summary": "Get All Chat Items (legacy - not used currently)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/entity.Chatitem"
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "entity.Chatitem": {
+            "type": "object",
+            "properties": {
+                "fromaddr": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "nftaddr": {
+                    "type": "string"
+                },
+                "nftid": {
+                    "type": "integer"
+                },
+                "read": {
+                    "type": "boolean"
+                },
+                "sender_name": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "type": "string"
+                },
+                "timestamp_dtm": {
+                    "type": "string"
+                },
+                "toaddr": {
+                    "type": "string"
+                }
+            }
+        },
         "entity.Chatiteminbox": {
             "type": "object",
             "properties": {
