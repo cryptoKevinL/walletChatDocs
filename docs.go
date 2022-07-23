@@ -104,7 +104,7 @@ const docTemplate = `{
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
 	Host:             "localhost:8080",
-	BasePath:         "/get_inbox",
+	BasePath:         "",
 	Schemes:          []string{},
 	Title:            "WalletChat API",
 	Description:      "This is the WalletChat messagez",
