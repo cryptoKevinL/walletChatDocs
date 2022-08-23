@@ -655,11 +655,11 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "localhost:8080",
+	Host:             "https://walletchat.fun",
 	BasePath:         "",
 	Schemes:          []string{},
 	Title:            "WalletChat API",
-	Description:      "This is the WalletChat messagez",
+	Description:      "This is the WalletChat API for third-party integration",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 }

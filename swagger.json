@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This is the WalletChat messagez",
+        "description": "This is the WalletChat API for third-party integration",
         "title": "WalletChat API",
         "contact": {
             "url": "https://walletchat.fun",
@@ -9,7 +9,7 @@
         },
         "version": "1.0"
     },
-    "host": "localhost:8080",
+    "host": "https://walletchat.fun",
     "paths": {
         "/get_inbox/{address}": {
             "get": {

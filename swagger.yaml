@@ -57,12 +57,12 @@ definitions:
       unread:
         type: integer
     type: object
-host: localhost:8080
+host: https://walletchat.fun
 info:
   contact:
     email: walletchatextension@gmail.com
     url: https://walletchat.fun
-  description: This is the WalletChat messagez
+  description: This is the WalletChat API for third-party integration
   title: WalletChat API
   version: "1.0"
 paths:
