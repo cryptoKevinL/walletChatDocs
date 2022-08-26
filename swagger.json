@@ -1,15 +1,15 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This is the WalletChat API for third-party integration",
+        "description": "This is the WalletChat messagez",
         "title": "WalletChat API",
         "contact": {
-            "url": "https://walletchat.fun",
+            "url": "https://restwalletchat-app-sey3k.ondigitalocean.app/",
             "email": "walletchatextension@gmail.com"
         },
         "version": "1.0"
     },
-    "host": "https://walletchat.fun",
+    "host": "localhost:8080",
     "paths": {
         "/get_inbox/{address}": {
             "get": {
