@@ -655,7 +655,7 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "restwalletchat-app-sey3k.ondigitalocean.app",
+	Host:             "restwalletchat-app-sey3k.ondigitalocean.app:25060",
 	BasePath:         "",
 	Schemes:          []string{},
 	Title:            "WalletChat API",
