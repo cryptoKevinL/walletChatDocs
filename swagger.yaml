@@ -57,11 +57,11 @@ definitions:
       unread:
         type: integer
     type: object
-host: localhost:8080
+host: restwalletchat-app-sey3k.ondigitalocean.app
 info:
   contact:
     email: walletchatextension@gmail.com
-    url: https://restwalletchat-app-sey3k.ondigitalocean.app/
+    url: https://walletchat.fun
   description: This is the WalletChat messagez
   title: WalletChat API
   version: "1.0"

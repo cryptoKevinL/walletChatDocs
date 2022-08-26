@@ -4,12 +4,12 @@
         "description": "This is the WalletChat messagez",
         "title": "WalletChat API",
         "contact": {
-            "url": "https://restwalletchat-app-sey3k.ondigitalocean.app/",
+            "url": "https://walletchat.fun",
             "email": "walletchatextension@gmail.com"
         },
         "version": "1.0"
     },
-    "host": "localhost:8080",
+    "host": "restwalletchat-app-sey3k.ondigitalocean.app",
     "paths": {
         "/get_inbox/{address}": {
             "get": {

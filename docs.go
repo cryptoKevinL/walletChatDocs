@@ -11,7 +11,7 @@ const docTemplate = `{
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
         "contact": {
-            "url": "https://restwalletchat-app-sey3k.ondigitalocean.app/",
+            "url": "https://walletchat.fun",
             "email": "walletchatextension@gmail.com"
         },
         "version": "{{.Version}}"
@@ -655,7 +655,7 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "localhost:8080",
+	Host:             "restwalletchat-app-sey3k.ondigitalocean.app",
 	BasePath:         "",
 	Schemes:          []string{},
 	Title:            "WalletChat API",
