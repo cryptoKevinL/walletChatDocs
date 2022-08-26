@@ -57,7 +57,7 @@ definitions:
       unread:
         type: integer
     type: object
-host: restwalletchat-app-sey3k.ondigitalocean.app:25060
+host: restwalletchat-app-sey3k.ondigitalocean.app
 info:
   contact:
     email: walletchatextension@gmail.com

@@ -9,7 +9,7 @@
         },
         "version": "1.0"
     },
-    "host": "restwalletchat-app-sey3k.ondigitalocean.app:25060",
+    "host": "restwalletchat-app-sey3k.ondigitalocean.app",
     "paths": {
         "/get_inbox/{address}": {
             "get": {
