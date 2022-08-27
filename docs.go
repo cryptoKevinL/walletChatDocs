@@ -987,12 +987,12 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "1.0",
+	Version:          "0.0",
 	Host:             "restwalletchat-app-sey3k.ondigitalocean.app",
 	BasePath:         "",
 	Schemes:          []string{},
 	Title:            "WalletChat API",
-	Description:      "This is the WalletChat messagez",
+	Description:      "Wecome to the WalletChat API Documentation\nPlease make note that some JSON data structures are shared for both input/output.\nRequired input parameters will have a red * next to them in the data type outline at\nthe bottom of the page, along with a comment.  This means when executing API functionality\nfrom this API page, some fields may need to be removed from the JSON struct before submitting.\nPlease email the developers with any issues.\nSome JSON data structures are output only, and will be marked as such as well.\n\nv0 of the API does not include encryption or authentication.  Please as you are given access\nto this page, do not abuse this system and impersonate others, or submit offensive material.\ndevelopers monitor this data daily.\n\nv1 will include encyrption for DMs, private keys will be stored locally on client PCs\nwith no way for us to recover any data which is encrypted.\nv1 will also include basic JWT Authentication, however some more work to make this fully secure\nwill be needed and included in v2.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 }

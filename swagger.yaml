@@ -109,9 +109,25 @@ info:
   contact:
     email: walletchatextension@gmail.com
     url: https://walletchat.fun
-  description: This is the WalletChat messagez
+  description: |-
+    Wecome to the WalletChat API Documentation
+    Please make note that some JSON data structures are shared for both input/output.
+    Required input parameters will have a red * next to them in the data type outline at
+    the bottom of the page, along with a comment.  This means when executing API functionality
+    from this API page, some fields may need to be removed from the JSON struct before submitting.
+    Please email the developers with any issues.
+    Some JSON data structures are output only, and will be marked as such as well.
+
+    v0 of the API does not include encryption or authentication.  Please as you are given access
+    to this page, do not abuse this system and impersonate others, or submit offensive material.
+    developers monitor this data daily.
+
+    v1 will include encyrption for DMs, private keys will be stored locally on client PCs
+    with no way for us to recover any data which is encrypted.
+    v1 will also include basic JWT Authentication, however some more work to make this fully secure
+    will be needed and included in v2.
   title: WalletChat API
-  version: "1.0"
+  version: "0.0"
 paths:
   /community:
     post:
