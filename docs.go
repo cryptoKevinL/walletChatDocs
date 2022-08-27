@@ -19,6 +19,43 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/community": {
+            "post": {
+                "description": "Community Chat Data",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Group"
+                ],
+                "summary": "CreateCommunityChatitem creates GroupChatitem just with community tag (likely could be consolidated)",
+                "parameters": [
+                    {
+                        "description": "Community Message Chat Data",
+                        "name": "message",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.Groupchatitem"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/entity.Groupchatitem"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/create_chatitem": {
             "post": {
                 "description": "For DMs, CreateChatItem is used to store the message in the backed database",
@@ -50,6 +87,80 @@ const docTemplate = `{
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/entity.Chatitem"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/create_groupchatitem": {
+            "post": {
+                "description": "Currently used for all messages outside of DMs",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Group"
+                ],
+                "summary": "Create/Insert chat message for Community/NFT/Group Messaging",
+                "parameters": [
+                    {
+                        "description": "Group Message Chat Data",
+                        "name": "message",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.Groupchatitem"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/entity.Groupchatitem"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/get_groupchatitems/{address}": {
+            "get": {
+                "description": "Community Chat Data",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Group"
+                ],
+                "summary": "GetGroupChatItems gets group chat data for a given address",
+                "parameters": [
+                    {
+                        "description": "Get Group Chat Data Data By Address",
+                        "name": "message",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.Groupchatitem"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/entity.Groupchatitem"
                             }
                         }
                     }
@@ -683,6 +794,38 @@ const docTemplate = `{
                 },
                 "unread": {
                     "type": "integer"
+                }
+            }
+        },
+        "entity.Groupchatitem": {
+            "type": "object",
+            "properties": {
+                "context_type": {
+                    "type": "string"
+                },
+                "fromaddr": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "nftaddr": {
+                    "type": "string"
+                },
+                "sender_name": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "type": "string"
+                },
+                "timestamp_dtm": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
                 }
             }
         }

@@ -57,6 +57,27 @@ definitions:
       unread:
         type: integer
     type: object
+  entity.Groupchatitem:
+    properties:
+      context_type:
+        type: string
+      fromaddr:
+        type: string
+      id:
+        type: integer
+      message:
+        type: string
+      nftaddr:
+        type: string
+      sender_name:
+        type: string
+      timestamp:
+        type: string
+      timestamp_dtm:
+        type: string
+      type:
+        type: string
+    type: object
 host: restwalletchat-app-sey3k.ondigitalocean.app
 info:
   contact:
@@ -66,6 +87,31 @@ info:
   title: WalletChat API
   version: "1.0"
 paths:
+  /community:
+    post:
+      consumes:
+      - application/json
+      description: Community Chat Data
+      parameters:
+      - description: Community Message Chat Data
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/entity.Groupchatitem'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Groupchatitem'
+            type: array
+      summary: CreateCommunityChatitem creates GroupChatitem just with community tag
+        (likely could be consolidated)
+      tags:
+      - Group
   /create_chatitem:
     post:
       consumes:
@@ -91,6 +137,54 @@ paths:
       summary: Create/Insert DM chat message (1-to-1 messaging)
       tags:
       - DM
+  /create_groupchatitem:
+    post:
+      consumes:
+      - application/json
+      description: Currently used for all messages outside of DMs
+      parameters:
+      - description: Group Message Chat Data
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/entity.Groupchatitem'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Groupchatitem'
+            type: array
+      summary: Create/Insert chat message for Community/NFT/Group Messaging
+      tags:
+      - Group
+  /get_groupchatitems/{address}:
+    get:
+      consumes:
+      - application/json
+      description: Community Chat Data
+      parameters:
+      - description: Get Group Chat Data Data By Address
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/entity.Groupchatitem'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Groupchatitem'
+            type: array
+      summary: GetGroupChatItems gets group chat data for a given address
+      tags:
+      - Group
   /get_inbox/{address}:
     get:
       consumes:
