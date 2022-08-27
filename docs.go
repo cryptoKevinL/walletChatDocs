@@ -105,7 +105,7 @@ const docTemplate = `{
                 "tags": [
                     "DMs"
                 ],
-                "summary": "Create/Insert DM chat message (1-to-1 messaging)",
+                "summary": "Create/Insert DM Chat Message (1-to-1 messaging)",
                 "parameters": [
                     {
                         "description": "Direct Message Chat Data",
