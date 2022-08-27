@@ -29,7 +29,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Group"
+                    "GroupChat"
                 ],
                 "summary": "CreateCommunityChatitem creates GroupChatitem just with community tag (likely could be consolidated)",
                 "parameters": [
@@ -66,7 +66,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "DM"
+                    "DMs"
                 ],
                 "summary": "Create/Insert DM chat message (1-to-1 messaging)",
                 "parameters": [
@@ -103,7 +103,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Group"
+                    "GroupChat"
                 ],
                 "summary": "Create/Insert chat message for Community/NFT/Group Messaging",
                 "parameters": [
@@ -140,7 +140,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Group"
+                    "GroupChat"
                 ],
                 "summary": "GetGroupChatItems gets group chat data for a given address",
                 "parameters": [
@@ -177,7 +177,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "inbox"
+                    "Inbox"
                 ],
                 "summary": "Get Inbox Summary With Last Message",
                 "parameters": [
@@ -212,7 +212,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "inbox"
+                    "Inbox"
                 ],
                 "summary": "Get all unread messages TO a specific user, used for total count notification at top notification bar",
                 "parameters": [
@@ -244,7 +244,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "inbox"
+                    "NFT"
                 ],
                 "summary": "Get all unread messages for a specific NFT context",
                 "parameters": [
@@ -282,7 +282,7 @@ const docTemplate = `{
         },
         "/get_unread_cnt/{fromaddr}/{toaddr}": {
             "get": {
-                "description": "Get Unread count for DMs (\u003e_\u003c)",
+                "description": "Get Unread count for DMs",
                 "consumes": [
                     "application/json"
                 ],
@@ -290,7 +290,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "inbox"
+                    "Unused/Legacy"
                 ],
                 "summary": "Get all unread messages between two addresses",
                 "parameters": [
@@ -321,7 +321,7 @@ const docTemplate = `{
         },
         "/get_unread_cnt_by_type/{address}/{type}": {
             "get": {
-                "description": "Get Each 1-on-1 Conversation, NFT and Community Chat For Display in Inbox (\u003e_\u003c)",
+                "description": "Get Each 1-on-1 Conversation, NFT and Community Chat For Display in Inbox",
                 "consumes": [
                     "application/json"
                 ],
@@ -329,7 +329,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "inbox"
+                    "Unused/Legacy"
                 ],
                 "summary": "Get all unread messages TO a specific user, used for total count notification at top notification bar",
                 "parameters": [
@@ -360,7 +360,7 @@ const docTemplate = `{
         },
         "/get_unread_cnt_nft/{address}": {
             "get": {
-                "description": "Get Unread count for all NFT contexts given a wallet address (\u003e_\u003c)",
+                "description": "Get Unread count for all NFT contexts given a wallet address",
                 "consumes": [
                     "application/json"
                 ],
@@ -368,7 +368,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "inbox"
+                    "Unused/Legacy"
                 ],
                 "summary": "Get all unread messages for all NFT related chats for given user",
                 "parameters": [
@@ -390,35 +390,9 @@ const docTemplate = `{
                 }
             }
         },
-        "/getall_chatitems": {
-            "get": {
-                "description": "Get Entire Chatitems table",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "inbox"
-                ],
-                "summary": "Get All Chat Items (legacy - not used currently)",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/entity.Chatitem"
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/getall_chatitems/{address}": {
             "get": {
-                "description": "Get all Chat Items for DMs for a given wallet address (\u003e_\u003c)",
+                "description": "Get all Chat Items for DMs for a given wallet address",
                 "consumes": [
                     "application/json"
                 ],
@@ -426,7 +400,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "inbox"
+                    "Unused/Legacy"
                 ],
                 "summary": "Get Chat Item For Given Wallet Address",
                 "parameters": [
@@ -461,7 +435,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "inbox"
+                    "DMs"
                 ],
                 "summary": "Get Chat Data Between Two Addresses",
                 "parameters": [
@@ -495,7 +469,7 @@ const docTemplate = `{
         },
         "/getnft_chatitems/{address}": {
             "get": {
-                "description": "Get ALL NFT context items for a given wallet address (\u003e_\u003c)",
+                "description": "Get ALL NFT context items for a given wallet address",
                 "consumes": [
                     "application/json"
                 ],
@@ -503,7 +477,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "inbox"
+                    "Unused/Legacy"
                 ],
                 "summary": "Get NFT Related Chat Items For Given Wallet Address",
                 "parameters": [
@@ -530,7 +504,7 @@ const docTemplate = `{
         },
         "/getnft_chatitems/{address}/{nftaddr}/{nftid}": {
             "get": {
-                "description": "Get all specified NFT contract and ID items for a given wallet address (\u003e_\u003c)",
+                "description": "Get all specified NFT contract and ID items for a given wallet address",
                 "consumes": [
                     "application/json"
                 ],
@@ -538,7 +512,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "inbox"
+                    "Unused/Legacy"
                 ],
                 "summary": "Get NFT Related Chat Items For Given NFT Contract and ID, relating to one wallet",
                 "parameters": [
@@ -587,7 +561,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "inbox"
+                    "NFT"
                 ],
                 "summary": "Get NFT Related Chat Items For Given NFT Contract and ID, between two wallet addresses (TO and FROM are interchangable)",
                 "parameters": [
@@ -635,7 +609,7 @@ const docTemplate = `{
         },
         "/getnft_chatitems/{nftaddr}/{nftid}": {
             "get": {
-                "description": "Get ALL NFT context items for a given wallet address (\u003e_\u003c)",
+                "description": "Get ALL NFT context items for a given wallet address",
                 "consumes": [
                     "application/json"
                 ],
@@ -643,7 +617,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "inbox"
+                    "Unused/Legacy"
                 ],
                 "summary": "Get NFT Related Chat Items For Given NFT Contract and ID",
                 "parameters": [
@@ -685,7 +659,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "inbox"
+                    "Inbox"
                 ],
                 "summary": "Get all unread messages TO a specific user, used for total count notification at top notification bar",
                 "parameters": [

@@ -111,7 +111,7 @@ paths:
       summary: CreateCommunityChatitem creates GroupChatitem just with community tag
         (likely could be consolidated)
       tags:
-      - Group
+      - GroupChat
   /create_chatitem:
     post:
       consumes:
@@ -136,7 +136,7 @@ paths:
             type: array
       summary: Create/Insert DM chat message (1-to-1 messaging)
       tags:
-      - DM
+      - DMs
   /create_groupchatitem:
     post:
       consumes:
@@ -160,7 +160,7 @@ paths:
             type: array
       summary: Create/Insert chat message for Community/NFT/Group Messaging
       tags:
-      - Group
+      - GroupChat
   /get_groupchatitems/{address}:
     get:
       consumes:
@@ -184,7 +184,7 @@ paths:
             type: array
       summary: GetGroupChatItems gets group chat data for a given address
       tags:
-      - Group
+      - GroupChat
   /get_inbox/{address}:
     get:
       consumes:
@@ -208,7 +208,7 @@ paths:
             type: array
       summary: Get Inbox Summary With Last Message
       tags:
-      - inbox
+      - Inbox
   /get_unread_cnt/{address}:
     get:
       consumes:
@@ -231,7 +231,7 @@ paths:
       summary: Get all unread messages TO a specific user, used for total count notification
         at top notification bar
       tags:
-      - inbox
+      - Inbox
   /get_unread_cnt/{address}/{nftaddr}/{nftid}:
     get:
       consumes:
@@ -263,12 +263,12 @@ paths:
             type: integer
       summary: Get all unread messages for a specific NFT context
       tags:
-      - inbox
+      - NFT
   /get_unread_cnt/{fromaddr}/{toaddr}:
     get:
       consumes:
       - application/json
-      description: Get Unread count for DMs (>_<)
+      description: Get Unread count for DMs
       parameters:
       - description: 'TO: Wallet Address'
         in: path
@@ -289,13 +289,13 @@ paths:
             type: integer
       summary: Get all unread messages between two addresses
       tags:
-      - inbox
+      - Unused/Legacy
   /get_unread_cnt_by_type/{address}/{type}:
     get:
       consumes:
       - application/json
       description: Get Each 1-on-1 Conversation, NFT and Community Chat For Display
-        in Inbox (>_<)
+        in Inbox
       parameters:
       - description: Wallet Address
         in: path
@@ -317,12 +317,12 @@ paths:
       summary: Get all unread messages TO a specific user, used for total count notification
         at top notification bar
       tags:
-      - inbox
+      - Unused/Legacy
   /get_unread_cnt_nft/{address}:
     get:
       consumes:
       - application/json
-      description: Get Unread count for all NFT contexts given a wallet address (>_<)
+      description: Get Unread count for all NFT contexts given a wallet address
       parameters:
       - description: Wallet Address
         in: path
@@ -338,29 +338,12 @@ paths:
             type: integer
       summary: Get all unread messages for all NFT related chats for given user
       tags:
-      - inbox
-  /getall_chatitems:
-    get:
-      consumes:
-      - application/json
-      description: Get Entire Chatitems table
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/entity.Chatitem'
-            type: array
-      summary: Get All Chat Items (legacy - not used currently)
-      tags:
-      - inbox
+      - Unused/Legacy
   /getall_chatitems/{address}:
     get:
       consumes:
       - application/json
-      description: Get all Chat Items for DMs for a given wallet address (>_<)
+      description: Get all Chat Items for DMs for a given wallet address
       parameters:
       - description: Wallet Address
         in: path
@@ -378,7 +361,7 @@ paths:
             type: array
       summary: Get Chat Item For Given Wallet Address
       tags:
-      - inbox
+      - Unused/Legacy
   /getall_chatitems/{fromaddr}/{toaddr}:
     get:
       consumes:
@@ -407,12 +390,12 @@ paths:
             type: array
       summary: Get Chat Data Between Two Addresses
       tags:
-      - inbox
+      - DMs
   /getnft_chatitems/{address}:
     get:
       consumes:
       - application/json
-      description: Get ALL NFT context items for a given wallet address (>_<)
+      description: Get ALL NFT context items for a given wallet address
       parameters:
       - description: Wallet Address
         in: path
@@ -430,13 +413,13 @@ paths:
             type: array
       summary: Get NFT Related Chat Items For Given Wallet Address
       tags:
-      - inbox
+      - Unused/Legacy
   /getnft_chatitems/{address}/{nftaddr}/{nftid}:
     get:
       consumes:
       - application/json
       description: Get all specified NFT contract and ID items for a given wallet
-        address (>_<)
+        address
       parameters:
       - description: Wallet Address
         in: path
@@ -465,7 +448,7 @@ paths:
       summary: Get NFT Related Chat Items For Given NFT Contract and ID, relating
         to one wallet
       tags:
-      - inbox
+      - Unused/Legacy
   /getnft_chatitems/{fromaddr}/{toaddr}/{nftaddr}/{nftid}:
     get:
       consumes:
@@ -505,12 +488,12 @@ paths:
       summary: Get NFT Related Chat Items For Given NFT Contract and ID, between two
         wallet addresses (TO and FROM are interchangable)
       tags:
-      - inbox
+      - NFT
   /getnft_chatitems/{nftaddr}/{nftid}:
     get:
       consumes:
       - application/json
-      description: Get ALL NFT context items for a given wallet address (>_<)
+      description: Get ALL NFT context items for a given wallet address
       parameters:
       - description: NFT Contract Address
         in: path
@@ -533,7 +516,7 @@ paths:
             type: array
       summary: Get NFT Related Chat Items For Given NFT Contract and ID
       tags:
-      - inbox
+      - Unused/Legacy
   /unreadcount/{address}:
     get:
       consumes:
@@ -555,5 +538,5 @@ paths:
       summary: Get all unread messages TO a specific user, used for total count notification
         at top notification bar
       tags:
-      - inbox
+      - Inbox
 swagger: "2.0"
