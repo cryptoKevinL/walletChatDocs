@@ -1,4 +1,13 @@
 definitions:
+  entity.Addrnameitem:
+    properties:
+      address:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
   entity.Bookmarkitem:
     properties:
       chain:
@@ -104,6 +113,15 @@ definitions:
       type:
         type: string
     type: object
+  entity.Imageitem:
+    properties:
+      base64data:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
 host: restwalletchat-app-sey3k.ondigitalocean.app
 info:
   contact:
@@ -111,6 +129,7 @@ info:
     url: https://walletchat.fun
   description: |-
     Wecome to the WalletChat API Documentation
+
     Please make note that some JSON data structures are shared for both input/output.
     Required input parameters will have a red * next to them in the data type outline at
     the bottom of the page, along with a comment.  This means when executing API functionality
@@ -124,6 +143,7 @@ info:
 
     v1 will include encyrption for DMs, private keys will be stored locally on client PCs
     with no way for us to recover any data which is encrypted.
+
     v1 will also include basic JWT Authentication, however some more work to make this fully secure
     will be needed and included in v2.
   title: WalletChat API
@@ -251,6 +271,31 @@ paths:
       summary: Leave an NFT or Community group chat
       tags:
       - GroupChat
+  /deleteall_chatitems/{fromaddr}/{toaddr}:
+    delete:
+      consumes:
+      - application/json
+      description: 'TODO: Need to protect this with JWT in addition to other API calls
+        needed to use FROM addr from the JWT'
+      parameters:
+      - description: 'TO: Address'
+        in: path
+        name: toaddr
+        required: true
+        type: string
+      - description: 'FROM: Address'
+        in: path
+        name: fromaddr
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+      summary: Delete All Chat Items (DMs) between FROM and TO given addresses
+      tags:
+      - Unused/Legacy
   /get_bookmarks/{address}/:
     get:
       consumes:
@@ -308,7 +353,7 @@ paths:
       - application/json
       description: Community Chat Data
       parameters:
-      - description: Get Group Chat Data Data By Address
+      - description: Get Group Chat Data Data By NFT Address
         in: path
         name: message
         required: true
@@ -325,6 +370,59 @@ paths:
       summary: GetGroupChatItems gets group chat data for a given address
       tags:
       - GroupChat
+  /get_groupchatitems/{address}/{useraddress}:
+    get:
+      consumes:
+      - application/json
+      description: 'Get all group chat items for a given wallet (useraddress) for
+        a given NFT Contract Address (TODO: fix up var names)'
+      parameters:
+      - description: NFT Address
+        in: path
+        name: address
+        required: true
+        type: string
+      - description: 'FROM: wallet address'
+        in: path
+        name: useraddress
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Groupchatitem'
+            type: array
+      summary: Get group chat items, given a wallt FROM address and NFT Contract Address
+      tags:
+      - Common
+  /get_groupchatitems_unreadcnt/{address}/{useraddress}:
+    get:
+      consumes:
+      - application/json
+      description: |-
+        For group chat unread counts, currently the database stores a timestamp for each time a user enters a group chat.
+        We though in the design it would be impractical to keep a read/unread count copy per user per message, but if this
+        method doesn't proof to be fine grained enough, we could add a boolean relational table of read messgages per user.
+      parameters:
+      - description: Common Name Mapped to User/Community
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+      summary: 'Get Unread Groupchat Items (TODO: cleanup naming convention here)'
+      tags:
+      - Common
   /get_inbox/{address}:
     get:
       consumes:
@@ -657,6 +755,150 @@ paths:
       summary: Get NFT Related Chat Items For Given NFT Contract and ID
       tags:
       - Unused/Legacy
+  /image:
+    post:
+      consumes:
+      - application/json
+      description: Currently used for the WC HQ Logo, stores the base64 raw data of
+        the profile image for a community
+      parameters:
+      - description: Profile Thumbnail Pic
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/entity.Imageitem'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Bookmarkitem'
+            type: array
+      summary: Store Image in DB for later user
+      tags:
+      - Common
+    put:
+      consumes:
+      - application/json
+      description: Currently used for the WC HQ Logo, stores the base64 raw data of
+        the profile image for a community
+      parameters:
+      - description: Profile Thumbnail Pic
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/entity.Imageitem'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Bookmarkitem'
+            type: array
+      summary: Store Image in DB for later user (update existing photo)
+      tags:
+      - Common
+  /image/{name}:
+    get:
+      consumes:
+      - application/json
+      description: Retreive image data for use with user/community/nft group dislayed
+        icon
+      parameters:
+      - description: Common Name Mapped to User/Community
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Imageitem'
+            type: array
+      summary: Get Thumbnail Image Data
+      tags:
+      - Common
+  /name:
+    post:
+      consumes:
+      - application/json
+      description: Give a common name (Kevin.eth, BillyTheKid, etc) to an Address
+      parameters:
+      - description: Address and Name to map together
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/entity.Addrnameitem'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Bookmarkitem'
+            type: array
+      summary: give a common name to a user address, or NFT collection
+      tags:
+      - Common
+    put:
+      consumes:
+      - application/json
+      description: Give a common name (Kevin.eth, BillyTheKid, etc) to an Address
+      parameters:
+      - description: Address and Name to map together
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/entity.Addrnameitem'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Bookmarkitem'
+            type: array
+      summary: give a common name to a user address, or NFT collection (update exiting)
+      tags:
+      - Common
+  /name/{name}:
+    get:
+      consumes:
+      - application/json
+      description: get the given a common name (Kevin.eth, BillyTheKid, etc) what
+        has already been mapped to an Address
+      parameters:
+      - description: Get Name for given address
+        in: path
+        name: address
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Addrnameitem'
+            type: array
+      summary: get the common name which has been mapped to an address
+      tags:
+      - Common
   /unreadcount/{address}:
     get:
       consumes:
@@ -679,4 +921,31 @@ paths:
         at top notification bar
       tags:
       - Inbox
+  /update_chatitem/{fromaddr}/{toaddr}:
+    put:
+      consumes:
+      - application/json
+      description: |-
+        Currently this only update the message read/unread status.  It could update the entire JSON struct
+        upon request, however we only needed this functionality currently and it saved re-encryption of the data.
+        TODO: TO/FROM address in the URL is not needed/not used anymore.
+      parameters:
+      - description: chat item JSON struct to update msg read status
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/entity.Chatitem'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Chatitem'
+            type: array
+      summary: Update Message Read Status of a given DM chat message
+      tags:
+      - DMs
 swagger: "2.0"

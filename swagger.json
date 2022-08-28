@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "Wecome to the WalletChat API Documentation\nPlease make note that some JSON data structures are shared for both input/output.\nRequired input parameters will have a red * next to them in the data type outline at\nthe bottom of the page, along with a comment.  This means when executing API functionality\nfrom this API page, some fields may need to be removed from the JSON struct before submitting.\nPlease email the developers with any issues.\nSome JSON data structures are output only, and will be marked as such as well.\n\nv0 of the API does not include encryption or authentication.  Please as you are given access\nto this page, do not abuse this system and impersonate others, or submit offensive material.\ndevelopers monitor this data daily.\n\nv1 will include encyrption for DMs, private keys will be stored locally on client PCs\nwith no way for us to recover any data which is encrypted.\nv1 will also include basic JWT Authentication, however some more work to make this fully secure\nwill be needed and included in v2.",
+        "description": "Wecome to the WalletChat API Documentation\n\nPlease make note that some JSON data structures are shared for both input/output.\nRequired input parameters will have a red * next to them in the data type outline at\nthe bottom of the page, along with a comment.  This means when executing API functionality\nfrom this API page, some fields may need to be removed from the JSON struct before submitting.\nPlease email the developers with any issues.\nSome JSON data structures are output only, and will be marked as such as well.\n\nv0 of the API does not include encryption or authentication.  Please as you are given access\nto this page, do not abuse this system and impersonate others, or submit offensive material.\ndevelopers monitor this data daily.\n\nv1 will include encyrption for DMs, private keys will be stored locally on client PCs\nwith no way for us to recover any data which is encrypted.\n\nv1 will also include basic JWT Authentication, however some more work to make this fully secure\nwill be needed and included in v2.",
         "title": "WalletChat API",
         "contact": {
             "url": "https://walletchat.fun",
@@ -196,6 +196,42 @@
                 }
             }
         },
+        "/deleteall_chatitems/{fromaddr}/{toaddr}": {
+            "delete": {
+                "description": "TODO: Need to protect this with JWT in addition to other API calls needed to use FROM addr from the JWT",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Unused/Legacy"
+                ],
+                "summary": "Delete All Chat Items (DMs) between FROM and TO given addresses",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "TO: Address",
+                        "name": "toaddr",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "FROM: Address",
+                        "name": "fromaddr",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
         "/get_bookmarks/{address}/": {
             "get": {
                 "description": "This used for UI purposes, checking if a user/wallet has bookmarked a community.",
@@ -286,7 +322,7 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Get Group Chat Data Data By Address",
+                        "description": "Get Group Chat Data Data By NFT Address",
                         "name": "message",
                         "in": "path",
                         "required": true
@@ -300,6 +336,80 @@
                             "items": {
                                 "$ref": "#/definitions/entity.Groupchatitem"
                             }
+                        }
+                    }
+                }
+            }
+        },
+        "/get_groupchatitems/{address}/{useraddress}": {
+            "get": {
+                "description": "Get all group chat items for a given wallet (useraddress) for a given NFT Contract Address (TODO: fix up var names)",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Common"
+                ],
+                "summary": "Get group chat items, given a wallt FROM address and NFT Contract Address",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "NFT Address",
+                        "name": "address",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "FROM: wallet address",
+                        "name": "useraddress",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/entity.Groupchatitem"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/get_groupchatitems_unreadcnt/{address}/{useraddress}": {
+            "get": {
+                "description": "For group chat unread counts, currently the database stores a timestamp for each time a user enters a group chat.\nWe though in the design it would be impractical to keep a read/unread count copy per user per message, but if this\nmethod doesn't proof to be fine grained enough, we could add a boolean relational table of read messgages per user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "text/plain"
+                ],
+                "tags": [
+                    "Common"
+                ],
+                "summary": "Get Unread Groupchat Items (TODO: cleanup naming convention here)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Common Name Mapped to User/Community",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "integer"
                         }
                     }
                 }
@@ -787,6 +897,220 @@
                 }
             }
         },
+        "/image": {
+            "put": {
+                "description": "Currently used for the WC HQ Logo, stores the base64 raw data of the profile image for a community",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Common"
+                ],
+                "summary": "Store Image in DB for later user (update existing photo)",
+                "parameters": [
+                    {
+                        "description": "Profile Thumbnail Pic",
+                        "name": "message",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.Imageitem"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/entity.Bookmarkitem"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Currently used for the WC HQ Logo, stores the base64 raw data of the profile image for a community",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Common"
+                ],
+                "summary": "Store Image in DB for later user",
+                "parameters": [
+                    {
+                        "description": "Profile Thumbnail Pic",
+                        "name": "message",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.Imageitem"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/entity.Bookmarkitem"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/image/{name}": {
+            "get": {
+                "description": "Retreive image data for use with user/community/nft group dislayed icon",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Common"
+                ],
+                "summary": "Get Thumbnail Image Data",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Common Name Mapped to User/Community",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/entity.Imageitem"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/name": {
+            "put": {
+                "description": "Give a common name (Kevin.eth, BillyTheKid, etc) to an Address",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Common"
+                ],
+                "summary": "give a common name to a user address, or NFT collection (update exiting)",
+                "parameters": [
+                    {
+                        "description": "Address and Name to map together",
+                        "name": "message",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.Addrnameitem"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/entity.Bookmarkitem"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Give a common name (Kevin.eth, BillyTheKid, etc) to an Address",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Common"
+                ],
+                "summary": "give a common name to a user address, or NFT collection",
+                "parameters": [
+                    {
+                        "description": "Address and Name to map together",
+                        "name": "message",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.Addrnameitem"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/entity.Bookmarkitem"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/name/{name}": {
+            "get": {
+                "description": "get the given a common name (Kevin.eth, BillyTheKid, etc) what has already been mapped to an Address",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Common"
+                ],
+                "summary": "get the common name which has been mapped to an address",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Get Name for given address",
+                        "name": "address",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/entity.Addrnameitem"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/unreadcount/{address}": {
             "get": {
                 "description": "Get Unread count just given an address",
@@ -818,9 +1142,60 @@
                     }
                 }
             }
+        },
+        "/update_chatitem/{fromaddr}/{toaddr}": {
+            "put": {
+                "description": "Currently this only update the message read/unread status.  It could update the entire JSON struct\nupon request, however we only needed this functionality currently and it saved re-encryption of the data.\nTODO: TO/FROM address in the URL is not needed/not used anymore.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DMs"
+                ],
+                "summary": "Update Message Read Status of a given DM chat message",
+                "parameters": [
+                    {
+                        "description": "chat item JSON struct to update msg read status",
+                        "name": "message",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.Chatitem"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/entity.Chatitem"
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "entity.Addrnameitem": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
         "entity.Bookmarkitem": {
             "type": "object",
             "properties": {
@@ -970,6 +1345,20 @@
                     "type": "string"
                 },
                 "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "entity.Imageitem": {
+            "type": "object",
+            "properties": {
+                "base64data": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
                     "type": "string"
                 }
             }
