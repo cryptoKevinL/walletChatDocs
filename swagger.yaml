@@ -1,4 +1,82 @@
 definitions:
+  controllers.Attachments:
+    properties:
+      media_keys:
+        items:
+          type: string
+        type: array
+    type: object
+  controllers.LandingPageItems:
+    properties:
+      has_messaged:
+        description: has user messaged in this group chat before? if not show "Say
+          hi" button
+        type: boolean
+      is_verified:
+        description: is this group verified? WalletChat's group is verified by default
+        type: boolean
+      joined:
+        description: number of members of the group
+        type: boolean
+      logo:
+        description: logo url, stored in backend
+        type: string
+      members:
+        type: integer
+      messages:
+        items:
+          $ref: '#/definitions/entity.Groupchatitem'
+        type: array
+      name:
+        type: string
+      social:
+        items:
+          $ref: '#/definitions/controllers.SocialMsg'
+        type: array
+      tweets:
+        description: follow format of GET /get_twitter/{nftAddr}
+        items:
+          $ref: '#/definitions/controllers.TweetType'
+        type: array
+    type: object
+  controllers.SocialMsg:
+    properties:
+      type:
+        type: string
+      username:
+        type: string
+    type: object
+  controllers.TweetType:
+    properties:
+      attachments:
+        properties:
+          media_keys:
+            items:
+              type: string
+            type: array
+        type: object
+      author_id:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: string
+      media:
+        $ref: '#/definitions/controllers.Attachments'
+      text:
+        type: string
+      user:
+        properties:
+          id:
+            type: string
+          name:
+            type: string
+          profile_image_url:
+            type: string
+          username:
+            type: string
+        type: object
+    type: object
   entity.Addrnameitem:
     properties:
       address:
@@ -92,6 +170,23 @@ definitions:
       unread:
         type: integer
     type: object
+  entity.Comments:
+    properties:
+      fromaddr:
+        type: string
+      id:
+        type: integer
+      message:
+        type: string
+      name:
+        type: string
+      nftaddr:
+        type: string
+      nftid:
+        type: integer
+      timestamp:
+        type: string
+    type: object
   entity.Groupchatitem:
     properties:
       context_type:
@@ -120,6 +215,16 @@ definitions:
       id:
         type: integer
       name:
+        type: string
+    type: object
+  entity.Settings:
+    properties:
+      id:
+        type: integer
+      publickey:
+        description: need this for encryption, don't want to get it over and over
+        type: string
+      walletaddr:
         type: string
     type: object
 host: restwalletchat-app-sey3k.ondigitalocean.app
@@ -174,6 +279,35 @@ paths:
         (likely could be consolidated)
       tags:
       - GroupChat
+  /community/{community}/{address}:
+    get:
+      consumes:
+      - application/json
+      description: 'TODO: need a creation API for communities, which includes specificied
+        welcome message text, Twitter handle, page title'
+      parameters:
+      - description: Wallet Address
+        in: path
+        name: address
+        required: true
+        type: string
+      - description: Wallet Address
+        in: path
+        name: address
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/controllers.LandingPageItems'
+            type: array
+      summary: Get Community Chat Landing Page Info
+      tags:
+      - GroupChat
   /create_bookmark:
     post:
       consumes:
@@ -223,6 +357,31 @@ paths:
       summary: Create/Insert DM Chat Message (1-to-1 messaging)
       tags:
       - DMs
+  /create_comments:
+    post:
+      consumes:
+      - application/json
+      description: Comments are meant to be public, someday having an up/downvote
+        method for auto-moderation
+      parameters:
+      - description: create struct
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/entity.Comments'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Comments'
+            type: array
+      summary: Comments are used within an NFT community chat
+      tags:
+      - Common
   /create_groupchatitem:
     post:
       consumes:
@@ -247,6 +406,31 @@ paths:
       summary: Create/Insert chat message for Community/NFT/Group Messaging
       tags:
       - GroupChat
+  /create_settings:
+    post:
+      consumes:
+      - application/json
+      description: Currently this only updates the public key, could be expanded as
+        needed.
+      parameters:
+      - description: update struct
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/entity.Settings'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Settings'
+            type: array
+      summary: Settings hold a user address and the public key used for encryption.
+      tags:
+      - Common
   /delete_bookmark:
     post:
       consumes:
@@ -271,6 +455,49 @@ paths:
       summary: Leave an NFT or Community group chat
       tags:
       - GroupChat
+  /delete_settings/{address}:
+    delete:
+      consumes:
+      - application/json
+      description: 'TODO: Need to protect this with JWT in addition to other API calls
+        needed to use FROM addr from the JWT'
+      parameters:
+      - description: Wallet Address
+        in: path
+        name: address
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+      summary: Delete Settings Info
+      tags:
+      - Unused/Legacy
+    get:
+      consumes:
+      - application/json
+      description: 'TODO: Need to protect this with JWT in addition to other API calls
+        needed to use FROM addr from the JWT'
+      parameters:
+      - description: Wallet Address
+        in: path
+        name: address
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Settings'
+            type: array
+      summary: Get Settings Info
+      tags:
+      - Unused/Legacy
   /deleteall_chatitems/{fromaddr}/{toaddr}:
     delete:
       consumes:
@@ -948,4 +1175,29 @@ paths:
       summary: Update Message Read Status of a given DM chat message
       tags:
       - DMs
+  /update_settings:
+    put:
+      consumes:
+      - application/json
+      description: Currently this only updates the public key, could be expanded as
+        needed.
+      parameters:
+      - description: update struct
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/entity.Settings'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Settings'
+            type: array
+      summary: Settings hold a user address and the public key used for encryption.
+      tags:
+      - Common
 swagger: "2.0"

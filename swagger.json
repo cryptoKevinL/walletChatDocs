@@ -48,6 +48,48 @@
                 }
             }
         },
+        "/community/{community}/{address}": {
+            "get": {
+                "description": "TODO: need a creation API for communities, which includes specificied welcome message text, Twitter handle, page title",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "GroupChat"
+                ],
+                "summary": "Get Community Chat Landing Page Info",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Wallet Address",
+                        "name": "address",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Wallet Address",
+                        "name": "address",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/controllers.LandingPageItems"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/create_bookmark": {
             "post": {
                 "description": "Bookmarks keep an NFT/Community group chat in the sidebar",
@@ -122,6 +164,43 @@
                 }
             }
         },
+        "/create_comments": {
+            "post": {
+                "description": "Comments are meant to be public, someday having an up/downvote method for auto-moderation",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Common"
+                ],
+                "summary": "Comments are used within an NFT community chat",
+                "parameters": [
+                    {
+                        "description": "create struct",
+                        "name": "message",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.Comments"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/entity.Comments"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/create_groupchatitem": {
             "post": {
                 "description": "Currently used for all messages outside of DMs",
@@ -153,6 +232,43 @@
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/entity.Groupchatitem"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/create_settings": {
+            "post": {
+                "description": "Currently this only updates the public key, could be expanded as needed.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Common"
+                ],
+                "summary": "Settings hold a user address and the public key used for encryption.",
+                "parameters": [
+                    {
+                        "description": "update struct",
+                        "name": "message",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.Settings"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/entity.Settings"
                             }
                         }
                     }
@@ -192,6 +308,68 @@
                                 "$ref": "#/definitions/entity.Bookmarkitem"
                             }
                         }
+                    }
+                }
+            }
+        },
+        "/delete_settings/{address}": {
+            "get": {
+                "description": "TODO: Need to protect this with JWT in addition to other API calls needed to use FROM addr from the JWT",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Unused/Legacy"
+                ],
+                "summary": "Get Settings Info",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Wallet Address",
+                        "name": "address",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/entity.Settings"
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "TODO: Need to protect this with JWT in addition to other API calls needed to use FROM addr from the JWT",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Unused/Legacy"
+                ],
+                "summary": "Delete Settings Info",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Wallet Address",
+                        "name": "address",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
                     }
                 }
             }
@@ -1179,9 +1357,162 @@
                     }
                 }
             }
+        },
+        "/update_settings": {
+            "put": {
+                "description": "Currently this only updates the public key, could be expanded as needed.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Common"
+                ],
+                "summary": "Settings hold a user address and the public key used for encryption.",
+                "parameters": [
+                    {
+                        "description": "update struct",
+                        "name": "message",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.Settings"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/entity.Settings"
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "controllers.Attachments": {
+            "type": "object",
+            "properties": {
+                "media_keys": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "controllers.LandingPageItems": {
+            "type": "object",
+            "properties": {
+                "has_messaged": {
+                    "description": "has user messaged in this group chat before? if not show \"Say hi\" button",
+                    "type": "boolean"
+                },
+                "is_verified": {
+                    "description": "is this group verified? WalletChat's group is verified by default",
+                    "type": "boolean"
+                },
+                "joined": {
+                    "description": "number of members of the group",
+                    "type": "boolean"
+                },
+                "logo": {
+                    "description": "logo url, stored in backend",
+                    "type": "string"
+                },
+                "members": {
+                    "type": "integer"
+                },
+                "messages": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entity.Groupchatitem"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "social": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/controllers.SocialMsg"
+                    }
+                },
+                "tweets": {
+                    "description": "follow format of GET /get_twitter/{nftAddr}",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/controllers.TweetType"
+                    }
+                }
+            }
+        },
+        "controllers.SocialMsg": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "controllers.TweetType": {
+            "type": "object",
+            "properties": {
+                "attachments": {
+                    "type": "object",
+                    "properties": {
+                        "media_keys": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "author_id": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "media": {
+                    "$ref": "#/definitions/controllers.Attachments"
+                },
+                "text": {
+                    "type": "string"
+                },
+                "user": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "profile_image_url": {
+                            "type": "string"
+                        },
+                        "username": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "entity.Addrnameitem": {
             "type": "object",
             "properties": {
@@ -1317,6 +1648,32 @@
                 }
             }
         },
+        "entity.Comments": {
+            "type": "object",
+            "properties": {
+                "fromaddr": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "nftaddr": {
+                    "type": "string"
+                },
+                "nftid": {
+                    "type": "integer"
+                },
+                "timestamp": {
+                    "type": "string"
+                }
+            }
+        },
         "entity.Groupchatitem": {
             "type": "object",
             "properties": {
@@ -1359,6 +1716,21 @@
                     "type": "integer"
                 },
                 "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "entity.Settings": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "publickey": {
+                    "description": "need this for encryption, don't want to get it over and over",
+                    "type": "string"
+                },
+                "walletaddr": {
                     "type": "string"
                 }
             }
