@@ -612,7 +612,7 @@ paths:
       - application/json
       description: Community Chat Data
       parameters:
-      - description: Get Group Chat Data Data By NFT Address
+      - description: Get Group Chat Data By NFT Address
         in: path
         name: message
         required: true
@@ -626,9 +626,9 @@ paths:
             items:
               $ref: '#/definitions/entity.Groupchatitem'
             type: array
-      summary: GetGroupChatItems gets group chat data for a given address
+      summary: GetGroupChatItems gets group chat data for a given NFT address
       tags:
-      - GroupChat
+      - NFT
   /get_groupchatitems/{address}/{useraddress}:
     get:
       consumes:
@@ -657,7 +657,7 @@ paths:
             type: array
       summary: Get group chat items, given a wallt FROM address and NFT Contract Address
       tags:
-      - Common
+      - NFT
   /get_groupchatitems_unreadcnt/{address}/{useraddress}:
     get:
       consumes:

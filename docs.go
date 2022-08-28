@@ -551,13 +551,13 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "GroupChat"
+                    "NFT"
                 ],
-                "summary": "GetGroupChatItems gets group chat data for a given address",
+                "summary": "GetGroupChatItems gets group chat data for a given NFT address",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Get Group Chat Data Data By NFT Address",
+                        "description": "Get Group Chat Data By NFT Address",
                         "name": "message",
                         "in": "path",
                         "required": true
@@ -586,7 +586,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Common"
+                    "NFT"
                 ],
                 "summary": "Get group chat items, given a wallt FROM address and NFT Contract Address",
                 "parameters": [
