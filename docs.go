@@ -320,6 +320,49 @@ const docTemplate = `{
                 }
             }
         },
+        "/delete_comments/{fromaddr}/{nftaddr}/{nftid}": {
+            "delete": {
+                "description": "NFTs have a public comment section",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "NFT"
+                ],
+                "summary": "Get Public Comments for given NFT Contract and ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "FROM Wallet Address",
+                        "name": "address",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "NFT Contract Address",
+                        "name": "nftaddr",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "NFT ID",
+                        "name": "nftid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
         "/delete_settings/{address}": {
             "get": {
                 "description": "TODO: Need to protect this with JWT in addition to other API calls needed to use FROM addr from the JWT",
@@ -487,6 +530,45 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "type": "bool"
+                        }
+                    }
+                }
+            }
+        },
+        "/get_comments/{nftaddr}/{nftid}": {
+            "get": {
+                "description": "NFTs have a public comment section",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "NFT"
+                ],
+                "summary": "Get Public Comments Count for given NFT Contract and ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "NFT Contract Address",
+                        "name": "nftaddr",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "NFT ID",
+                        "name": "nftid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "integer"
                         }
                     }
                 }
@@ -1184,6 +1266,48 @@ const docTemplate = `{
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/entity.Imageitem"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/is_owner/{contract}/{wallet}": {
+            "get": {
+                "description": "API user could check this directly via any third party service like NFTPort, Moralis as well",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "common"
+                ],
+                "summary": "Check if given wallet address owns an NFT from given contract address",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "NFT Contract Address",
+                        "name": "contract",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Wallet Address",
+                        "name": "wallet",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/controllers.LandingPageItems"
                             }
                         }
                     }
