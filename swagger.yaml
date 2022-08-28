@@ -481,7 +481,8 @@ paths:
       responses:
         "204":
           description: No Content
-      summary: Get Public Comments for given NFT Contract and ID
+      summary: Delete Public Comments for given FROM wallet address, NFT Contract
+        and ID
       tags:
       - NFT
   /delete_settings/{address}:

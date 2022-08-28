@@ -332,7 +332,7 @@ const docTemplate = `{
                 "tags": [
                     "NFT"
                 ],
-                "summary": "Get Public Comments for given NFT Contract and ID",
+                "summary": "Delete Public Comments for given FROM wallet address, NFT Contract and ID",
                 "parameters": [
                     {
                         "type": "string",
