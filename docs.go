@@ -364,39 +364,6 @@ const docTemplate = `{
             }
         },
         "/delete_settings/{address}": {
-            "get": {
-                "description": "TODO: Need to protect this with JWT in addition to other API calls needed to use FROM addr from the JWT",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Unused/Legacy"
-                ],
-                "summary": "Get Settings Info",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Wallet Address",
-                        "name": "address",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/entity.Settings"
-                            }
-                        }
-                    }
-                }
-            },
             "delete": {
                 "description": "TODO: Need to protect this with JWT in addition to other API calls needed to use FROM addr from the JWT",
                 "consumes": [
@@ -712,6 +679,41 @@ const docTemplate = `{
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/entity.Chatiteminbox"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/get_settings/{address}": {
+            "get": {
+                "description": "TODO: Need to protect this with JWT in addition to other API calls needed to use FROM addr from the JWT",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Unused/Legacy"
+                ],
+                "summary": "Get Settings Info",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Wallet Address",
+                        "name": "address",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/entity.Settings"
                             }
                         }
                     }
@@ -1282,7 +1284,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "common"
+                    "Common"
                 ],
                 "summary": "Check if given wallet address owns an NFT from given contract address",
                 "parameters": [

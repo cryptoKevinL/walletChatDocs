@@ -504,29 +504,6 @@ paths:
       summary: Delete Settings Info
       tags:
       - Unused/Legacy
-    get:
-      consumes:
-      - application/json
-      description: 'TODO: Need to protect this with JWT in addition to other API calls
-        needed to use FROM addr from the JWT'
-      parameters:
-      - description: Wallet Address
-        in: path
-        name: address
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/entity.Settings'
-            type: array
-      summary: Get Settings Info
-      tags:
-      - Unused/Legacy
   /deleteall_chatitems/{fromaddr}/{toaddr}:
     delete:
       consumes:
@@ -729,6 +706,30 @@ paths:
       summary: Get Inbox Summary With Last Message
       tags:
       - Inbox
+  /get_settings/{address}:
+    get:
+      consumes:
+      - application/json
+      description: 'TODO: Need to protect this with JWT in addition to other API calls
+        needed to use FROM addr from the JWT'
+      parameters:
+      - description: Wallet Address
+        in: path
+        name: address
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Settings'
+            type: array
+      summary: Get Settings Info
+      tags:
+      - Unused/Legacy
   /get_unread_cnt/{address}:
     get:
       consumes:
@@ -1138,7 +1139,7 @@ paths:
             type: array
       summary: Check if given wallet address owns an NFT from given contract address
       tags:
-      - common
+      - Common
   /name:
     post:
       consumes:
