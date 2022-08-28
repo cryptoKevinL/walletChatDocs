@@ -182,7 +182,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Common"
+                    "NFT"
                 ],
                 "summary": "Comments are used within an NFT community chat",
                 "parameters": [
