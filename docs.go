@@ -1423,6 +1423,74 @@ const docTemplate = `{
                 }
             }
         },
+        "/register": {
+            "post": {
+                "description": "This is a one-time operation, maybe could be combined into the nonce-generating call.  Basically places a wallet address\ninto the database for further use.  Only the \"address\" field is needed for input here in the AuthUser struct.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Register Wallet Address for the first time, one-time operation",
+                "parameters": [
+                    {
+                        "description": "address input in json format",
+                        "name": "message",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/auth.Authuser"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            }
+        },
+        "/signin": {
+            "post": {
+                "description": "Every call the to API after this signin should present the JWT Bearer token for authenticated access.\nUpon request we can change the timeout to greater than 24 hours, or setup an addtional dedicated API for\nan agreed upon development and maintenance cost.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Sign In with signed nonce value, currently JWT token returned should be valid for 24 hours",
+                "parameters": [
+                    {
+                        "description": "json input containing signed nonce",
+                        "name": "message",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/auth.SigninPayload"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            }
+        },
         "/unreadcount/{address}": {
             "get": {
                 "description": "Get Unread count just given an address",
@@ -1528,9 +1596,63 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/users/{address}/nonce": {
+            "get": {
+                "description": "As part of the login process, we need a user to sign a nonce genrated from the API, to prove the user in fact\nthe owner of the wallet they are siging in from.  JWT currently set to 24 hour validity (could change this upon request)",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "If the current wallet doesn't have a valid local JWT, need to request a new nonce to sign",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "wallet address to get nonce to sign",
+                        "name": "address",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": ""
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "auth.Authuser": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "nonce": {
+                    "type": "string"
+                }
+            }
+        },
+        "auth.SigninPayload": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "nonce": {
+                    "type": "string"
+                },
+                "sig": {
+                    "type": "string"
+                }
+            }
+        },
         "controllers.Attachments": {
             "type": "object",
             "properties": {
@@ -1874,7 +1996,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "0.0",
+	Version:          "1.0",
 	Host:             "restwalletchat-app-sey3k.ondigitalocean.app",
 	BasePath:         "",
 	Schemes:          []string{},
